@@ -7,17 +7,18 @@ import javax.persistence.*;
 @Entity
 public class Server {
 	@Id
-    @GeneratedValue
+    @GeneratedValue(strategy=GenerationType.AUTO)
 	private int id;
 	
 	// Name of the server (a slug provided to the webservice to access some server)
-	@Column(nullable = false)
+	@Column(nullable = false, unique = true)
 	private String name;
 	
 	// A generated access key to give the users to avoid everyone messing with our points
 	@Column(nullable = false)
 	private String key;
 	
+	@OneToMany(cascade=CascadeType.ALL, mappedBy="server")
 	private List<Marker> markers;
 	
 	

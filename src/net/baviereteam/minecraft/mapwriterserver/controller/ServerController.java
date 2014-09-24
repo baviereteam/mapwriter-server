@@ -1,4 +1,4 @@
-package net.baviereteam.minecraft.mapwriterserver.controllers;
+package net.baviereteam.minecraft.mapwriterserver.controller;
 
 import org.springframework.boot.autoconfigure.*;
 import org.springframework.stereotype.*;

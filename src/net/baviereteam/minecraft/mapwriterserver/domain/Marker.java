@@ -5,8 +5,8 @@ import javax.persistence.*;
 @Entity
 public class Marker {
 	@Id
-    @GeneratedValue
-	private int id;
+    @GeneratedValue(strategy=GenerationType.AUTO)
+	private long id;
 	
     @Column(nullable = true)
 	private String group;
@@ -34,7 +34,12 @@ public class Marker {
     @Column(nullable = true)
 	private String picture;
 	
-	public int getId() {
+    // The server this marker is in
+    @ManyToOne
+    @JoinColumn
+    private Server server;
+    
+	public long getId() {
 		return id;
 	}
 	
