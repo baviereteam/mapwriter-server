@@ -8,7 +8,7 @@ public class Marker {
     @GeneratedValue(strategy=GenerationType.AUTO)
 	private long id;
 	
-    @Column(nullable = true)
+    @Column(nullable = true, name = "markerGroup")
 	private String group;
 
     @Column(nullable = false)

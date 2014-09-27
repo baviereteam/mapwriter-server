@@ -1,6 +1,7 @@
 package net.baviereteam.minecraft.mapwriterserver.domain;
 
 import java.util.List;
+import java.util.UUID;
 
 import javax.persistence.*;
 
@@ -45,6 +46,15 @@ public class Server {
 	}
 	public void setMarkers(List<Marker> markers) {
 		this.markers = markers;
+	}
+	
+	public void generateKey() {
+		this.key = UUID.randomUUID().toString();
+	}
+	
+	@Override
+	public String toString() {
+		return "Server (Name: " + this.name + ", Key: " + this.key + ")";
 	}
 	
 }
