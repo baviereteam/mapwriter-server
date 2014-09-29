@@ -1,0 +1,6 @@
+.project
+.metadata
+local.properties
+.settings/
+.classpath
+target/
