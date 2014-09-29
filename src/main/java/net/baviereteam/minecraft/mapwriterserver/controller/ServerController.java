@@ -1,6 +1,5 @@
 package net.baviereteam.minecraft.mapwriterserver.controller;
 
-import java.util.List;
 import java.util.logging.Logger;
 
 import net.baviereteam.minecraft.mapwriterserver.domain.Server;
@@ -25,13 +24,25 @@ public class ServerController {
 	/* ADMIN METHODS */
 	@RequestMapping(value="/list", produces="application/json")
 	@ResponseBody
-    public List<Server> list() {
-        return serverRepository.findAll();
+    public OperationResult list(@RequestParam String userKey) {
+		OperationResult result = new OperationResult();
+		
+		// Only the Administrator can list the Servers; we need to check the Master Key.
+		if(! MasterKeyService.getInstance().isValid(userKey)) {
+			result.setErrorMessage("Authentication error.");
+		}
+		
+		else {
+			result.setResult(true);
+			result.setResultingObject(serverRepository.findAll());
+		}
+		
+        return result;
     }
 	
-	@RequestMapping(value="/create/{name}/{userKey}", produces="application/json")
+	@RequestMapping(value="/create", produces="application/json")
 	@ResponseBody
-    public OperationResult create(@PathVariable String name, @PathVariable String userKey) {
+    public OperationResult create(@RequestParam String name, @RequestParam String userKey) {
 		OperationResult result = new OperationResult();
 		
 		// Only the Administrator can create a Server; we need to check the Master Key.
@@ -67,9 +78,9 @@ public class ServerController {
 		return result;
     }
 
-	@RequestMapping(value="/rename/{id}/{name}/{userKey}", produces="application/json")
+	@RequestMapping(value="/rename/{id}", produces="application/json")
 	@ResponseBody
-	public OperationResult rename(@PathVariable int id, @PathVariable String name, @PathVariable String userKey) {
+	public OperationResult rename(@PathVariable int id, @RequestParam String name, @RequestParam String userKey) {
 		OperationResult result = new OperationResult();
 		
 		// Only the Administrator can rename a Server; we need to check the Master Key.
@@ -110,9 +121,9 @@ public class ServerController {
 		return result;
 	}
 
-	@RequestMapping(value="/changekey/{id}/{userKey}", produces="application/json")
+	@RequestMapping(value="/changekey/{id}", produces="application/json")
 	@ResponseBody
-	public OperationResult changeKey(@PathVariable int id, @PathVariable String userKey) {
+	public OperationResult changeKey(@PathVariable int id, @RequestParam String userKey) {
 		OperationResult result = new OperationResult();
 		
 		// Only the Administrator can change the key for a Server; we need to check the Master Key.
@@ -153,9 +164,9 @@ public class ServerController {
 		return result;
 	}
 
-	@RequestMapping(value="/delete/{id}/{userKey}", produces="application/json")
+	@RequestMapping(value="/delete/{id}", produces="application/json")
 	@ResponseBody
-	public OperationResult delete(@PathVariable int id, @PathVariable String userKey) {
+	public OperationResult delete(@PathVariable int id, @RequestParam String userKey) {
 		OperationResult result = new OperationResult();
 		
 		// Only the Administrator can delete a Server; we need to check the Master Key.

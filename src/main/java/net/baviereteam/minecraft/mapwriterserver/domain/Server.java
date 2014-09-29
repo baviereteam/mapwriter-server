@@ -5,6 +5,8 @@ import java.util.UUID;
 
 import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 public class Server {
 	@Id
@@ -19,6 +21,7 @@ public class Server {
 	@Column(nullable = false)
 	private String key;
 	
+	// Deletes all markers linked to the server on deletion
 	@OneToMany(cascade=CascadeType.ALL, mappedBy="server")
 	private List<Marker> markers;
 	
@@ -41,6 +44,7 @@ public class Server {
 		this.key = key;
 	}
 	
+	@JsonIgnore
 	public List<Marker> getMarkers() {
 		return markers;
 	}
@@ -50,6 +54,10 @@ public class Server {
 	
 	public void generateKey() {
 		this.key = UUID.randomUUID().toString();
+	}
+	
+	public boolean isKeyValid(String userKey) {
+		return this.key.equalsIgnoreCase(userKey);
 	}
 	
 	@Override

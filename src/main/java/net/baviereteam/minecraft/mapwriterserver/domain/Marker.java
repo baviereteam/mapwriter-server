@@ -2,6 +2,8 @@ package net.baviereteam.minecraft.mapwriterserver.domain;
 
 import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 public class Marker {
 	@Id
@@ -26,7 +28,7 @@ public class Marker {
     @Column(nullable = false)
 	private int dimension;
 
-    // The colour we will use to represent this marker in MapWriter
+    // The color we will use to represent this marker in MapWriter
     @Column(nullable = false)
 	private int color;
 
@@ -98,6 +100,14 @@ public class Marker {
 		this.picture = picture;
 	}
 	
-	protected Marker() {
+	@JsonIgnore
+	public Server getServer() {
+		return server;
+	}
+	public void setServer(Server server) {
+		this.server = server;
+	}
+	
+	public Marker() {
 	}
 }
