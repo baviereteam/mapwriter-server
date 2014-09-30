@@ -56,6 +56,32 @@ public class MarkerController {
         return result;
     }
 
+	@RequestMapping(value = "/get/{markerId}", produces = "application/json")
+	@ResponseBody
+	public OperationResult list(@PathVariable long markerId, @RequestParam String userKey) {
+		OperationResult result = new OperationResult();
+
+		// We need the marker to find the server (used to check the key)
+		Marker marker = markerRepository.findOne(markerId);
+		if (marker == null) {
+			result.setErrorMessage("Marker not found.");
+		}
+
+		else {
+			// Are we allowed to access the data ? (have the Server key or the Master key)
+			if (MasterKeyService.getInstance().isValid(userKey) || marker.getServer().isKeyValid(userKey)) {
+				result.setResult(true);
+				result.setResultingObject(marker);
+			}
+
+			else {
+				result.setErrorMessage("Authentication error.");
+			}
+		}
+
+		return result;
+	}
+
 	@RequestMapping(value="/{serverId}/add", produces="application/json")
 	@ResponseBody
 	public OperationResult add(
