@@ -41,6 +41,22 @@
 <p>This is exactly what MapWriter-Server aims to be: a server-side application which will receive or send marker information to the (modified) MapWriter mods of the players.</p>
 
 <p>Technologically, it's a Spring Boot application. That's not a strategic choice; I worked a little bit woth Spring during my last internship and want to learn more about it !</p>
+
+<h3>
+<a name="build" class="anchor" href="#build"><span class="octicon octicon-link"></span></a>Build</h3>
+
+<p>MapWriter-Server packages as its own self-executable JAR, containing all its dependencies. In order to build the JAR file from the source code, use the <code>package</code> Maven goal.</p>
+
+<h3>
+<a name="use" class="anchor" href="#use"><span class="octicon octicon-link"></span></a>Use</h3>
+
+<p>MapWriter-Server is a JAR that you can simply start using the <code>java</code> command:
+<code>java -jar MapWriterServer-0.0.1-SNAPSHOT.jar</code></p>
+
+<p>The server starts and outputs lots of lines. At the end, it will provide a "Master Key" you will then use to connect and perform administrative tasks with the MapWriter Admin Client:</p>
+
+<p><code>2014-10-20 20:48:33.589  INFO 15420 --- [           main] n.b.minecraft.mapwriterserver.PostStart  : Master key is: 85b4f4d3-6c93-4e62-b6ff-1bda650f4c4e</code>
+<code>2014-10-20 20:48:33.592  INFO 15420 --- [           main] n.b.m.mapwriterserver.Application        : Started Application in 39.255 seconds (JVM running for 42.04)</code></p>
         </section>
 
         <footer>
